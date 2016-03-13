@@ -19,9 +19,21 @@ android {
     }
 }
 
+//应用插件
+apply plugin: 'com.bugtags.library.plugin'
+
+
+//必须配置，否则自动上传符号表功能不会生效
+bugtags {
+    appKey "fd8a95353a7a8f8bf8aa1d59270bb2c1"
+    appSecret  "2d7f04f373bd3e71a745d5c1d18bc77b"
+}
+
+//compile project(':androidkftools')
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+
+    compile 'com.bugtags.library:bugtags-lib:latest.integration'
 }
