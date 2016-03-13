@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AndroidKFTools.iml" filepath="$PROJECT_DIR$/AndroidKFTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidkftools/androidkftools.iml" filepath="$PROJECT_DIR$/androidkftools/androidkftools.iml" />
       <module fileurl="file://$PROJECT_DIR$/gisandroidmap/gisandroidmap.iml" filepath="$PROJECT_DIR$/gisandroidmap/gisandroidmap.iml" />
-      <module fileurl="file://$PROJECT_DIR$/toolslibrary/toolslibrary.iml" filepath="$PROJECT_DIR$/toolslibrary/toolslibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sample-demo/sample-demo.iml" filepath="$PROJECT_DIR$/sample-demo/sample-demo.iml" />
     </modules>
   </component>
 </project>

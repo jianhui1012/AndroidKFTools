@@ -16,37 +16,6 @@ public class MainActivity extends BasicActivity {
     private OkHttpUtils okHttpUtils;
 
     private UpdateMangerUtils updateMangerUtils;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setGuesture(true);
-        okHttpUtils = OkHttpUtils.getInstance();
-
-
-        //        okHttpUtils.getRequestMethod(this, "http://www.hao123.com/", new Callback() {
-        //            @Override
-        //            public void onFailure(Request request, IOException e) {
-        //
-        //            }
-        //
-        //            @Override
-        //            public void onResponse(Response response) throws IOException {
-        //                Log.d("com.tools.kf.gisandroidmap.MainActivity.MainActivity", response.body().string());
-        //            }
-        //        });
-
-          updateMangerUtils = new UpdateMangerUtils(this, updateCallBack);
-          updateMangerUtils.CheckUpdateFile(AppConfig.updateapkurl);
-
-    }
-
-
-    public void turnPage(View v) {
-        startActivity(new Bundle(), Main2Activity.class);
-    }
-
     public UpdateMangerUtils.UpdateCallBack updateCallBack = new UpdateMangerUtils.UpdateCallBack() {
 
         private SweetAlertDialog progressdialog = null, tipdialog = null;
@@ -114,5 +83,33 @@ public class MainActivity extends BasicActivity {
                 progressdialog.cancel();
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setGuesture(true);
+        okHttpUtils = OkHttpUtils.getInstance();
+
+
+        //        okHttpUtils.getRequestMethod(this, "http://www.hao123.com/", new Callback() {
+        //            @Override
+        //            public void onFailure(Request request, IOException e) {
+        //
+        //            }
+        //
+        //            @Override
+        //            public void onResponse(Response response) throws IOException {
+        //                Log.d("com.tools.kf.gisandroidmap.MainActivity.MainActivity", response.body().string());
+        //            }
+        //        });
+
+        updateMangerUtils = new UpdateMangerUtils(this, updateCallBack);
+        updateMangerUtils.CheckUpdateFile(AppConfig.updateapkurl);
+
+    }
+
+    public void turnPage(View v) {
+        startActivity(new Bundle(), ShowShipCrackActivity.class);
+    }
 }
 

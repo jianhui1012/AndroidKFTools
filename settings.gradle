@@ -1,1 +1,1 @@
-include ':androidkftools', ':gisandroidmap', ':toolslibrary'
+include ':androidkftools', ':gisandroidmap', ':sample-demo'
