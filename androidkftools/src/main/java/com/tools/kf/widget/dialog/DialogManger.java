@@ -1,4 +1,4 @@
-package com.tools.kf.dialog;
+package com.tools.kf.widget.dialog;
 
 /**
  * Created by djh on 2016/1/21.
