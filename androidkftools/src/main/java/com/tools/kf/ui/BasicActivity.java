@@ -9,9 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
-
-import com.tools.kf.R;
-import com.tools.kf.anotation.ViewInjectorImpl;
+import com.tools.kf.view.ViewInjectorImpl;
 import com.tools.kf.utils.LogHelper;
 
 public class BasicActivity extends AppCompatActivity implements OnGestureListener {
@@ -147,7 +145,7 @@ public class BasicActivity extends AppCompatActivity implements OnGestureListene
      */
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+
     }
 
 
@@ -172,7 +170,7 @@ public class BasicActivity extends AppCompatActivity implements OnGestureListene
             intent.putExtras(bundle);
         }
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+
     }
 
     /**
@@ -188,7 +186,7 @@ public class BasicActivity extends AppCompatActivity implements OnGestureListene
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, requestCode);
-        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+
     }
 
     /**
@@ -215,7 +213,7 @@ public class BasicActivity extends AppCompatActivity implements OnGestureListene
     /*
      * 对图片进行剪裁，通过Intent来调用系统自带的图片剪裁API
      */
-    protected void cropPhoto(Uri uri,String sdtempdir) {
+    protected void cropPhoto(Uri uri, String sdtempdir) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
