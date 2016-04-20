@@ -14,7 +14,13 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initBugTags();
 
+
+    }
+
+
+    private void initBugTags() {
         //customizable init option
         BugtagsOptions options = new BugtagsOptions.Builder().
                 trackingLocation(true).//是否获取位置
@@ -39,4 +45,6 @@ public class MyApplication extends Application {
             }
         });
     }
+
+
 }

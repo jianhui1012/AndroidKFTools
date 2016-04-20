@@ -1,14 +1,27 @@
-package com.tools.kf.sample_demo;
+package com.tools.kf.sample_demo.ui.base;
 
-import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.MotionEvent;
 
 import com.bugtags.library.Bugtags;
+import com.tools.kf.sample_demo.MyApplication;
+import com.tools.kf.ui.base.BaseAppCompatActivity;
 
 /**
  * Created by djh on 2016/3/13.
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends BaseAppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+
+    protected MyApplication getBaseApplication() {
+        return (MyApplication) getApplication();
+    }
 
     @Override
     protected void onResume() {
@@ -30,4 +43,5 @@ public class BaseActivity extends AppCompatActivity {
         Bugtags.onDispatchTouchEvent(this, ev);
         return super.dispatchTouchEvent(ev);
     }
+
 }
