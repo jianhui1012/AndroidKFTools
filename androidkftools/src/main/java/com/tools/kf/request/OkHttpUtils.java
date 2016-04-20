@@ -6,6 +6,9 @@ import android.os.Looper;
 
 import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -18,6 +21,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.FileNameMap;
+import java.net.URLConnection;
 
 /**
  * okhttp工具类
@@ -31,7 +36,7 @@ public class OkHttpUtils {
 
     private static final String TAG = "OkHttpUtils";
 
-    private ResultCallBack resultCallBack;
+    //private ResultCallBack resultCallBack;
 
     private boolean cansel = false;
 
@@ -123,7 +128,7 @@ public class OkHttpUtils {
      */
     public void downLoadFileByAsyn(Context context, final String urladdress,
                                    final String savepath, final ResultCallBack resultCallBack) {
-        this.resultCallBack = resultCallBack;
+        //this.resultCallBack = resultCallBack;
 
         final Request request = new Request.Builder().url(urladdress).tag(context)
                 .build();
@@ -145,15 +150,15 @@ public class OkHttpUtils {
 
                 FileOutputStream fileOutputStream = null;
 
-                String filename=FileHelper.getFileName(urladdress);
+                String filename = FileHelper.getFileName(urladdress);
 
-                String filepath=FileHelper.Get_Path(savepath);
+                String filepath = FileHelper.Get_Path(savepath);
                 try {
 
                     inputStream = response.body().byteStream();
 
 
-                    File file = new File(filepath,filename);
+                    File file = new File(filepath, filename);
                     if (file.exists()) {
                         file.delete();
                     }
@@ -167,22 +172,22 @@ public class OkHttpUtils {
 
                             num += count;
 
-                            int progress=(int) (((float) num / contentLength)* 100);
+                            int progress = (int) (((float) num / contentLength) * 100);
 
-                            sendDownLoadMessageCallback(progress,resultCallBack);
+                            sendDownLoadMessageCallback(progress, resultCallBack);
                             //resultCallBack.onDownLoadMessage((int) ((float) num / contentLength) * 100);
 
                             fileOutputStream.write(buff, 0, count);
                         } else {
                             //如果下载文件成功，第一个参数为文件的绝对路径
-                            sendSuccessMessageCallback(filepath,filename,resultCallBack);
-                           // resultCallBack.onSuccessMessage("下载成功", "");
+                            sendSuccessMessageCallback(filepath, filename, resultCallBack);
+                            // resultCallBack.onSuccessMessage("下载成功", "");
                             break;
                         }
                     }
                     if (cansel) {
                         //resultCallBack.onCanselMessage("取消成功");
-                        sendCanselMessageCallback("取消成功",resultCallBack);
+                        sendCanselMessageCallback("取消成功", resultCallBack);
                     }
 
                     fileOutputStream.flush();
@@ -237,7 +242,7 @@ public class OkHttpUtils {
         });
     }
 
-    private void sendFailureMessageCallback(final String msg ,final ResultCallBack callback) {
+    private void sendFailureMessageCallback(final String msg, final ResultCallBack callback) {
         mDelivery.post(new Runnable() {
             @Override
             public void run() {
@@ -248,7 +253,7 @@ public class OkHttpUtils {
         });
     }
 
-    private void sendCanselMessageCallback(final String msg ,final ResultCallBack callback) {
+    private void sendCanselMessageCallback(final String msg, final ResultCallBack callback) {
         mDelivery.post(new Runnable() {
             @Override
             public void run() {
@@ -259,15 +264,81 @@ public class OkHttpUtils {
         });
     }
 
-    public void sendOpenUpdateDialogCallback(final String msg ,final String description ,final UpdateMangerUtils.UpdateCallBack callback) {
+    public void sendOpenUpdateDialogCallback(final String msg, final String description, final UpdateMangerUtils.UpdateCallBack callback) {
         mDelivery.post(new Runnable() {
             @Override
             public void run() {
                 if (callback != null)
-                    callback.openUpdateDialog(msg,description);
+                    callback.openUpdateDialog(msg, description);
 
             }
         });
+    }
+
+
+    /***
+     * 构建文件上传请求
+     * @param url
+     * @param files
+     * @param fileKeys
+     * @param params
+     * @return
+     */
+    private Request buildMultipartFormRequest(String url, File[] files,
+                                              String[] fileKeys, Param[] params) {
+        params = validateParam(params);
+        MultipartBuilder builder = new MultipartBuilder()
+                .type(MultipartBuilder.FORM);
+        for (Param param : params) {
+            builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + param.key + "\""),
+                    RequestBody.create(null, param.value));
+        }
+        if (files != null) {
+            RequestBody fileBody = null;
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                String fileName = file.getName();
+                fileBody = RequestBody.create(MediaType.parse(guessMimeType(fileName)), file);
+                //TODO 根据文件名设置contentType
+                builder.addPart(Headers.of("Content-Disposition",
+                                "form-data; name=\"" + fileKeys[i] + "\"; filename=\"" + fileName + "\""),
+                        fileBody);
+            }
+        }
+
+        RequestBody requestBody = builder.build();
+        return new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+    }
+
+    private String guessMimeType(String path) {
+        FileNameMap fileNameMap = URLConnection.getFileNameMap();
+        String contentTypeFor = fileNameMap.getContentTypeFor(path);
+        if (contentTypeFor == null) {
+            contentTypeFor = "application/octet-stream";
+        }
+        return contentTypeFor;
+    }
+
+    private Param[] validateParam(Param[] params) {
+        if (params == null)
+            return new Param[0];
+        else return params;
+    }
+
+    public static class Param {
+        public Param() {
+        }
+
+        public Param(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        String key;
+        String value;
     }
 
 

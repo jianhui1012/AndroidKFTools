@@ -3,7 +3,7 @@ package com.tools.kf.gisandroidmap;
 import android.os.Bundle;
 import android.view.View;
 
-import com.tools.kf.anotation.ContentView;
+import com.tools.kf.view.anotation.ContentView;
 import com.tools.kf.request.OkHttpUtils;
 import com.tools.kf.request.UpdateMangerUtils;
 import com.tools.kf.ui.BasicActivity;

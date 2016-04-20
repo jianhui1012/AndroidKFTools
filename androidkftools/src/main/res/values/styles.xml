@@ -7,22 +7,4 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-
-    <!-- 下拉刷新 -->
-    <style name="drop_down_list_header_progress_bar_style">
-        <item name="android:minHeight">@dimen/drop_down_list_header_progress_bar_height</item>
-        <item name="android:maxHeight">@dimen/drop_down_list_header_progress_bar_height</item>
-    </style>
-
-    <style name="drop_down_list_footer_progress_bar_style">
-        <item name="android:minHeight">@dimen/drop_down_list_footer_progress_bar_height</item>
-        <item name="android:maxHeight">@dimen/drop_down_list_footer_progress_bar_height</item>
-    </style>
-
-    <style name="drop_down_list_footer_font_style">
-        <item name="android:textColor">@color/footer_text_color</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-    </style>
-
 </resources>
