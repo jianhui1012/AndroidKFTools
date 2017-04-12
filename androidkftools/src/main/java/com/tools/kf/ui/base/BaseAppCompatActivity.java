@@ -3,7 +3,7 @@ package com.tools.kf.ui.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
+import android.view.MenuItem;
 
 import com.tools.kf.view.ViewInjectorImpl;
 
@@ -16,7 +16,19 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewInjectorImpl.getInsatnce().inject(this);
+        initToolBar();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected abstract void initToolBar();
 
     /**
      * network connected
