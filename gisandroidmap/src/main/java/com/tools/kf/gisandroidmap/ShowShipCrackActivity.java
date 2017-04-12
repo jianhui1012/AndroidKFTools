@@ -2,10 +2,9 @@ package com.tools.kf.gisandroidmap;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
@@ -17,25 +16,30 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.tools.kf.ui.base.BaseAppCompatActivity;
+import com.tools.kf.view.anotation.ContentView;
+import com.tools.kf.view.anotation.ViewInject;
 
-public class ShowShipCrackActivity extends AppCompatActivity {
+@ContentView(R.layout.activity_showship)
+public class ShowShipCrackActivity extends BaseAppCompatActivity {
 
     private static Boolean flag = true;
-    private MapView mMapView;
     private BaiduMap mBaiduMap;
     private Double[] mdata1 = new Double[]{122.334235, 29.949103};
     private Double[] mdata2 = new Double[]{122.334882, 29.946975};
     private LatLng p1 = null;
     private LatLng p2 = null;
     private MediaPlayer player = null;
+    @ViewInject(R.id.mapview)
+    public MapView mMapView;
+    @ViewInject(R.id.common_toolbar)
+    public Toolbar common_toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         initData();
-
-        setContentView(mMapView);
 
         mBaiduMap = mMapView.getMap();
         //添加周围船位置
@@ -45,14 +49,10 @@ public class ShowShipCrackActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-
                 try {
                     while (flag) {
                         Thread.sleep(3000);
-
                         p1 = new LatLng(p1.latitude, p1.longitude + 0.00001 * ((int) (Math.random() * 50)));
-
                         startLocation(p1);
                     }
                 } catch (InterruptedException e) {
@@ -62,6 +62,15 @@ public class ShowShipCrackActivity extends AppCompatActivity {
             }
         }).start();
 
+    }
+
+    @Override
+    protected void initToolBar() {
+        if (common_toolbar != null) {
+            common_toolbar.setTitle("碰撞模拟");
+            common_toolbar.setNavigationIcon(R.drawable.ab_back);
+            setSupportActionBar(common_toolbar);
+        }
     }
 
     public void initLocation() {
@@ -83,7 +92,7 @@ public class ShowShipCrackActivity extends AppCompatActivity {
         // 构造定位数据
         MyLocationData locData = new MyLocationData.Builder()
                 .accuracy(1f)//设置定位数据的精度信息，单位：米
-                        // 此处设置开发者获取到的方向信息，顺时针0-360
+                // 此处设置开发者获取到的方向信息，顺时针0-360
                 .latitude(location.latitude)
                 .longitude(location.longitude).build();
         // 设置定位数据
@@ -109,11 +118,10 @@ public class ShowShipCrackActivity extends AppCompatActivity {
         p1 = new LatLng(mdata1[1], mdata1[0]);
 
         p2 = new LatLng(mdata2[1], mdata2[0]);
-
-        mMapView = new MapView(this,
-                new BaiduMapOptions().mapStatus(new MapStatus.Builder()
-                        .target(p1).build()));
-
+        //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+        MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(new MapStatus.Builder()
+                .target(p1).build());
+        mMapView.getMap().setMapStatus(mMapStatusUpdate);
     }
 
     public void addPiontMarker(LatLng point, int rId) {
@@ -152,5 +160,6 @@ public class ShowShipCrackActivity extends AppCompatActivity {
         mMapView.onDestroy();
         mMapView = null;
         flag = false;
+        player.reset();
     }
 }
