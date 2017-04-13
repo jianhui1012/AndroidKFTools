@@ -30,14 +30,14 @@ public class HomeActivity extends BaseAppCompatActivity {
         gis_re.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//readyGo();
+                readyGo(QueryGisActivity.class);
             }
         });
 
         forecast_re.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//readyGo();
+                readyGo(ForeCastActivity.class);
             }
         });
 
@@ -47,6 +47,11 @@ public class HomeActivity extends BaseAppCompatActivity {
                 readyGo(ShowShipCrackActivity.class);
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     @Override

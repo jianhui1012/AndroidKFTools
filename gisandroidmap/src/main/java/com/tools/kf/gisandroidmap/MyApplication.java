@@ -3,6 +3,7 @@ package com.tools.kf.gisandroidmap;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.tools.kf.KFToolsCenter;
 
 /**
@@ -16,6 +17,6 @@ public class MyApplication extends Application {
         KFToolsCenter.Ext.init(this);
         KFToolsCenter.Ext.setIsdebug(true);
         SDKInitializer.initialize(this);
-
+        Fresco.initialize(this);
     }
 }

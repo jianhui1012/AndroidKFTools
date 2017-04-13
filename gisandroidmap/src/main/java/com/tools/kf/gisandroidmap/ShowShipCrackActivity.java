@@ -39,8 +39,6 @@ public class ShowShipCrackActivity extends BaseAppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initData();
-
         mBaiduMap = mMapView.getMap();
         //添加周围船位置
         addPiontMarker(p2, R.mipmap.icon_marka);
@@ -68,7 +66,7 @@ public class ShowShipCrackActivity extends BaseAppCompatActivity {
     protected void initToolBar() {
         if (common_toolbar != null) {
             common_toolbar.setTitle("碰撞模拟");
-            common_toolbar.setNavigationIcon(R.drawable.ab_back);
+            common_toolbar.setNavigationIcon(R.mipmap.ab_back);
             setSupportActionBar(common_toolbar);
         }
     }
@@ -113,6 +111,7 @@ public class ShowShipCrackActivity extends BaseAppCompatActivity {
 
     }
 
+    @Override
     public void initData() {
 
         p1 = new LatLng(mdata1[1], mdata1[0]);
@@ -160,6 +159,7 @@ public class ShowShipCrackActivity extends BaseAppCompatActivity {
         mMapView.onDestroy();
         mMapView = null;
         flag = false;
-        player.reset();
+        if (player != null)
+            player.reset();
     }
 }

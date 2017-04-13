@@ -17,7 +17,10 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ViewInjectorImpl.getInsatnce().inject(this);
         initToolBar();
+        initData();
     }
+
+    protected abstract void initData();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
