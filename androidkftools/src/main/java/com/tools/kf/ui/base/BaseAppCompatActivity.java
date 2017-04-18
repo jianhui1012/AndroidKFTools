@@ -20,42 +20,43 @@ import com.tools.kf.view.ViewInjectorImpl;
  */
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
-    private NetChangeObserver mNetChangeObserver;
+    //private NetChangeObserver mNetChangeObserver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         BaseAppManager.getInstance().addActivity(this);
-        // base setup
-        Bundle extras = getIntent().getExtras();
-        if (null != extras) {
-            getBundleExtras(extras);
-        }
-
-        mNetChangeObserver = new NetChangeObserver() {
-            @Override
-            public void onNetConnected(NetType type) {
-                super.onNetConnected(type);
-                onNetworkConnected(type);
-            }
-
-            @Override
-            public void onNetDisConnect() {
-                super.onNetDisConnect();
-                onNetworkDisConnected();
-            }
-        };
-        //注册网络变化监听器
-        NetStateReceiver.registerObserver(mNetChangeObserver);
-        NetStateReceiver.registerNetworkStateReceiver(this);
+//        // base setup
+//        Bundle extras = getIntent().getExtras();
+//        if (null != extras) {
+//            //getBundleExtras(extras);
+//        }
+        ViewInjectorImpl.getInsatnce().inject(this);
+        initToolBar();
+        initData();
+//        mNetChangeObserver = new NetChangeObserver() {
+//            @Override
+//            public void onNetConnected(NetType type) {
+//                super.onNetConnected(type);
+//                onNetworkConnected(type);
+//            }
+//
+//            @Override
+//            public void onNetDisConnect() {
+//                super.onNetDisConnect();
+//                onNetworkDisConnected();
+//            }
+//        };
+//        //注册网络变化监听器
+//        NetStateReceiver.registerObserver(mNetChangeObserver);
+//        NetStateReceiver.registerNetworkStateReceiver(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        NetStateReceiver.removeRegisterObserver(mNetChangeObserver);
-        NetStateReceiver.unRegisterNetworkStateReceiver(this);
+//        NetStateReceiver.removeRegisterObserver(mNetChangeObserver);
+//        NetStateReceiver.unRegisterNetworkStateReceiver(this);
     }
 
     /**
@@ -63,17 +64,8 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
      *
      * @param extras
      */
-    protected abstract void getBundleExtras(Bundle extras);
+   // protected abstract void getBundleExtras(Bundle extras);
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * use SytemBarTintManager
@@ -117,15 +109,28 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         }
     }
 
+    protected abstract void initData();
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    protected abstract void initToolBar();
+
     /**
      * network connected
      */
-    protected abstract void onNetworkConnected(NetType type);
+    //protected abstract void onNetworkConnected(NetType type);
 
     /**
      * network disconnected
      */
-    protected abstract void onNetworkDisConnected();
+    //protected abstract void onNetworkDisConnected();
 
     @Override
     public void finish() {
