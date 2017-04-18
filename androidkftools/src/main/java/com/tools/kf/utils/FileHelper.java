@@ -24,16 +24,24 @@ public class FileHelper {
     /**
      * 返回SD卡上的绝对路径
      *
-     * @param path
-     *            相对路径
+     * @param path 相对路径
      * @return
      */
     public static String Get_Path(String path) {
 
-        File file_path = new File(Environment.getExternalStorageDirectory()+ path);
+        File file_path = new File(Environment.getExternalStorageDirectory() + path);
         if (!file_path.exists()) {
             file_path.mkdir();
         }
         return file_path.getPath();
+    }
+
+    public static boolean deleteFile(String filepath) {
+        boolean isok = false;
+        File file = new File(filepath);
+        if (file.exists()) {
+            isok = file.delete();
+        }
+        return isok;
     }
 }

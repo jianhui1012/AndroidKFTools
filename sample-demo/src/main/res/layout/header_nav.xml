@@ -11,7 +11,8 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:scaleType="fitXY"
-        android:src="@drawable/author" />
+        android:src="@drawable/author"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/id_header_authorname"
@@ -19,7 +20,8 @@
         android:layout_height="wrap_content"
         android:text="golike"
         android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/id_header_url"
@@ -27,7 +29,8 @@
         android:layout_height="wrap_content"
         android:text="http://www.baidu.com"
         android:textColor="@android:color/black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="gone" />
 
 
 </LinearLayout>

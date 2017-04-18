@@ -1,6 +1,7 @@
 package com.tools.kf.view.anotation;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,4 +43,7 @@ public interface ViewInjector {
      * @return
      */
     View inject(Object fragment, LayoutInflater inflater, ViewGroup container);
+
+
+
 }

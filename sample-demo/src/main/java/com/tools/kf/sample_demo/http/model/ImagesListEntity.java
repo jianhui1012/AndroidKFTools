@@ -16,9 +16,10 @@
 
 package com.tools.kf.sample_demo.http.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ImagesListEntity {
+public class ImagesListEntity implements Serializable {
     private String id;
     private String desc;
     private List<String> tags;

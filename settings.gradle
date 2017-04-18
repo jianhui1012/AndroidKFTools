@@ -1,1 +1,1 @@
-include ':androidkftools', ':gisandroidmap', ':sample-demo'
+include ':androidkftools', ':gisandroidmap', ':sample-demo', ':easyrecyclerview', ':gobackbluetooth'

@@ -1,6 +1,7 @@
 package com.tools.kf.view;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.util.HashSet;
 
 /***
  * 注解实现类
@@ -36,6 +38,20 @@ import java.lang.reflect.Proxy;
  * @see [nothing]
  */
 public class ViewInjectorImpl implements ViewInjector {
+
+
+    private static final HashSet<Class<?>> IGNORED = new HashSet<Class<?>>();
+
+    static {
+        IGNORED.add(Object.class);
+        IGNORED.add(Activity.class);
+        IGNORED.add(android.app.Fragment.class);
+        try {
+            IGNORED.add(Class.forName("android.support.v4.app.Fragment"));
+            IGNORED.add(Class.forName("android.support.v4.app.FragmentActivity"));
+        } catch (Throwable ignored) {
+        }
+    }
 
     /**
      * 类级的内部类，也就是静态的成员式内部类，该内部类的实例与外部类的实例 没有绑定关系，而且只有被调用到时才会装载，从而实现了延迟加载。
@@ -150,6 +166,7 @@ public class ViewInjectorImpl implements ViewInjector {
         return view;
     }
 
+
     /***
      * 对Activity中的控件注入 事件注入
      *
@@ -159,7 +176,9 @@ public class ViewInjectorImpl implements ViewInjector {
      */
     private void injectObject(Object windowobj, Class<?> windowobjtype,
                               ViewFinder viewFinder) {
-
+        if (windowobjtype == null || IGNORED.contains(windowobjtype)) {
+            return;
+        }
         Field[] fields = windowobjtype.getDeclaredFields();
         if (fields != null && fields.length > 0) {
             for (Field field : fields) {
@@ -178,7 +197,7 @@ public class ViewInjectorImpl implements ViewInjector {
                     try {
                         // 如果有父类布局id--父类布局下下找控件否则再当前页面对象布局找
                         View view = viewFinder.findViewById(
-                                viewInject.value(), viewInject.parentId());
+                                viewInject.value(),viewInject.parentId());
 
                         if (view != null) {
                             field.setAccessible(true);
@@ -196,7 +215,8 @@ public class ViewInjectorImpl implements ViewInjector {
             }
         }
 
-        Method[] methods = windowobjtype.getMethods();
+        //所有方法
+        Method[] methods = windowobjtype.getDeclaredMethods();
         if (methods != null && methods.length > 0) {
             for (Method method : methods) {
 
@@ -231,6 +251,8 @@ public class ViewInjectorImpl implements ViewInjector {
 
             }
         }
+
+        injectObject(windowobj, windowobjtype.getSuperclass(), viewFinder);
 
     }
 

@@ -15,3 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep public class cn.waps.** {*;}
+-keep public interface cn.waps.** {*;}
+#对亍使用 4.0.3 以上 android-sdk 进行顷目编译时产生异常癿情况时,加入以下内容：
+-dontwarn cn.waps.**

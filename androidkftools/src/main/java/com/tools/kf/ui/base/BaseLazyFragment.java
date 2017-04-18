@@ -1,6 +1,7 @@
 package com.tools.kf.ui.base;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,5 +49,59 @@ public abstract class BaseLazyFragment extends Fragment {
      * @return id of layout resource
      */
     protected abstract int getContentViewLayoutID();
+
+
+
+    /***
+     * startActivity
+     *
+     * @param clazz
+     */
+    protected void readyGo(Class<?> clazz) {
+        startActivity(new Intent(getActivity(), clazz));
+    }
+
+    protected void readyGo(Intent intent) {
+        startActivity(intent);
+    }
+
+    /***
+     * 带Bundle startActivity
+     *
+     * @param clazz
+     * @param bundle
+     */
+    protected void readyGo(Class<?> clazz, Bundle bundle) {
+        Intent intent = new Intent(getActivity(), clazz);
+        if (null != intent) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+    /**
+     * startActivityForResult
+     *
+     * @param clazz
+     * @param requestCode
+     */
+    protected void readyGoForResult(Class<?> clazz, int requestCode) {
+        Intent intent = new Intent(getActivity(), clazz);
+        startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * startActivityForResult with bundle
+     *
+     * @param clazz
+     * @param requestCode
+     * @param bundle
+     */
+    protected void readyGoForResult(Class<?> clazz, int requestCode, Bundle bundle) {
+        Intent intent = new Intent(getActivity(), clazz);
+        if (null != bundle) {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, requestCode);
+    }
 
 }

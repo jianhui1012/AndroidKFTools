@@ -17,7 +17,6 @@
 package com.tools.kf.sample_demo.utils;
 
 
-
 import com.tools.kf.sample_demo.api.ApiConstants;
 
 import java.io.UnsupportedEncodingException;
@@ -72,7 +71,7 @@ public class UriHelper {
 
     public String getImagesListUrl(String category, int pageNum) {
         StringBuffer sb = new StringBuffer();
-        sb.append(ApiConstants.Urls.BAIDU_IMAGES_URLS);
+        sb.append(AppConfig.Urls.BAIDU_IMAGES_URLS);
         sb.append("?col=");
         try {
             sb.append(URLEncoder.encode(category, "UTF-8"));
@@ -93,38 +92,20 @@ public class UriHelper {
         return sb.toString();
     }
 
-    public String getVideosListUrl(String category, int pageNum) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(ApiConstants.Urls.YOUKU_VIDEOS_URLS);
-        sb.append("?keyword=");
+
+    /***
+     * 搜狗图片接口来源于searchpicturetool工具类
+     * @param word
+     * @param page
+     * @return
+     */
+    public String getUrl(String word, int page) {
         try {
-            sb.append(URLEncoder.encode(category, "UTF-8"));
+            word = URLEncoder.encode(word, "gbk");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        sb.append("&page=");
-        sb.append(pageNum);
-        sb.append("&count=");
-        sb.append(PAGE_LIMIT);
-        sb.append("&public_type=all&paid=0&period=today&orderby=published&client_id=6ecd6970268b4c53");
-        return sb.toString().trim();
+        return AppConfig.Urls.BAIDU_IMAGES_URLS2+"/pics?query="+word+"&start="+page*PAGE_LIMIT+"&reqType=ajax&reqFrom=result";
     }
 
-    public String getVideoUserUrl(int userId) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(ApiConstants.Urls.YOUKU_USER_URLS);
-        sb.append("?user_id=");
-        sb.append(userId);
-        sb.append("&client_id=6ecd6970268b4c53");
-        return sb.toString().trim();
-    }
-
-    public String getDoubanPlayListUrl(String channelId) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(ApiConstants.Urls.DOUBAN_PLAY_LIST_URLS);
-        sb.append("?channel=");
-        sb.append(channelId);
-        sb.append("&app_name=radio_android&version=100&type=&sid=0");
-        return sb.toString().trim();
-    }
 }

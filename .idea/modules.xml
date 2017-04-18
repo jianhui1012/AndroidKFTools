@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidKFTools.iml" filepath="$PROJECT_DIR$/AndroidKFTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidkftools/androidkftools.iml" filepath="$PROJECT_DIR$/androidkftools/androidkftools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/easyrecyclerview/easyrecyclerview.iml" filepath="$PROJECT_DIR$/easyrecyclerview/easyrecyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/gisandroidmap/gisandroidmap.iml" filepath="$PROJECT_DIR$/gisandroidmap/gisandroidmap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gobackbluetooth/gobackbluetooth.iml" filepath="$PROJECT_DIR$/gobackbluetooth/gobackbluetooth.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample-demo/sample-demo.iml" filepath="$PROJECT_DIR$/sample-demo/sample-demo.iml" />
     </modules>
   </component>
