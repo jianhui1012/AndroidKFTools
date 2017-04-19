@@ -25,7 +25,7 @@ import com.tools.kf.view.anotation.ViewInject;
 @ContentView(R.layout.activity_showship)
 public class ShowShipCrackActivity extends BaseAppCompatActivity {
 
-    private static Boolean flag = true;
+    private   Boolean flag = true;
     private BaiduMap mBaiduMap;
     private Double[] mdata1 = new Double[]{122.334235, 29.949103};
     private Double[] mdata2 = new Double[]{122.334882, 29.946975};
@@ -61,13 +61,11 @@ public class ShowShipCrackActivity extends BaseAppCompatActivity {
 
             }
         }).start();
-
     }
 
     @Override
     protected void initToolBar() {
         if (common_toolbar != null) {
-
             setSupportActionBar(common_toolbar);
             common_toolbar.setTitle("碰撞模拟");
             common_toolbar.setNavigationIcon(R.mipmap.ab_back);
@@ -153,6 +151,7 @@ public class ShowShipCrackActivity extends BaseAppCompatActivity {
         super.onResume();
         // activity 恢复时同时恢复地图控件
         mMapView.onResume();
+        initData();
     }
 
     @Override
