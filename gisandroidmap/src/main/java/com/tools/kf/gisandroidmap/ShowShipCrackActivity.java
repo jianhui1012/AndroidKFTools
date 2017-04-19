@@ -3,6 +3,8 @@ package com.tools.kf.gisandroidmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -65,9 +67,12 @@ public class ShowShipCrackActivity extends BaseAppCompatActivity {
     @Override
     protected void initToolBar() {
         if (common_toolbar != null) {
+
+            setSupportActionBar(common_toolbar);
             common_toolbar.setTitle("碰撞模拟");
             common_toolbar.setNavigationIcon(R.mipmap.ab_back);
-            setSupportActionBar(common_toolbar);
+            // Menu item click 的監聽事件一樣要設定在 setSupportActionBar 才有作用
+            common_toolbar.setOnMenuItemClickListener(onMenuItemClick);
         }
     }
 
@@ -161,5 +166,26 @@ public class ShowShipCrackActivity extends BaseAppCompatActivity {
         flag = false;
         if (player != null)
             player.reset();
+    }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+
+            switch (menuItem.getItemId()) {
+                case R.id.action_refresh:
+                    initData();
+                    break;
+            }
+
+            return true;
+        }
+    };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 為了讓 Toolbar 的 Menu 有作用，這邊的程式不可以拿掉
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }
